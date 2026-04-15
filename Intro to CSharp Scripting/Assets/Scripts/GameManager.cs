@@ -16,7 +16,12 @@ public enum GameState
 
 public class GameManager : Singleton<GameManager>
 {
+    public static event Action<GameState> OnBeforeStateChanged;
+    public static event Action<GameState> OnAfterStateChanged;
     public GameState State { get; private set; }
+
+    private GameState _previousState = GameState.Starting;
+
 
     void Start()
     {
@@ -26,8 +31,12 @@ public class GameManager : Singleton<GameManager>
 
     public void ChangeState(GameState newState)
     {
+        OnBeforeStateChanged?.Invoke(newState);
+        _previousState = State;
         State = newState;
         Debug.Log("Changed Game State to    : " + newState);
+
+        
 
         //This Game Manager can do high level manager stuff, itself.
         switch (newState)
@@ -48,6 +57,17 @@ public class GameManager : Singleton<GameManager>
                 //throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
                 break;
         }
+
+        OnAfterStateChanged?.Invoke(newState);
+    }
+
+    public void TogglePause()
+    {
+        //ChangeState toggles between Paused and previous state
+        if (State == GameState.Paused)
+            ChangeState(_previousState);
+        else
+            ChangeState(GameState.Paused);
     }
 
     private IEnumerator HandleStarting()
