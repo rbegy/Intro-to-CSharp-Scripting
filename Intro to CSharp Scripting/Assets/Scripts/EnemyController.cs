@@ -13,6 +13,11 @@ public class EnemyController : MonoBehaviour
     private WaypointPath _waypointPath;
     private Vector2 _patrolTargetPosition;
 
+    public void AcceptDefeat()
+    {
+        Destroy(gameObject);
+    }
+
 
     // Awake is called before Start
     private void Awake()

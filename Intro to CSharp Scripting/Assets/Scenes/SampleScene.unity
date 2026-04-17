@@ -199,11 +199,12 @@ GameObject:
   - component: {fileID: 223707418}
   - component: {fileID: 223707417}
   - component: {fileID: 223707416}
+  - component: {fileID: 223707420}
   - component: {fileID: 223707419}
   - component: {fileID: 223707415}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -368,6 +369,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolDelay: 1
   patrolSpeed: 3
+--- !u!114 &223707420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223707414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3bd876c8ece574f8f94c99f86d27cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 3
+  hp: 3
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnZero:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 223707419}
+        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+        m_MethodName: AcceptDefeat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: AcceptDefeat
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
