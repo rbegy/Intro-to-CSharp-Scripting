@@ -47,14 +47,14 @@ public class GameManager : Singleton<GameManager>
             case GameState.Playing:
                 break;
             case GameState.Paused:
+                Time.timeScale = 0;
                 break;
             case GameState.FailScreen:
                 break;
             case GameState.VictoryDance:
                 break;
             default:
-                Debug.Log("GameState not handled: " + nameof(newState));
-                //throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
+                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
                 break;
         }
 

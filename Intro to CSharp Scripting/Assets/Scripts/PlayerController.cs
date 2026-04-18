@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private Vector2 _facingVector = Vector2.right;
     [SerializeField] private GameObject _ballPrefab;
+    private bool _isRecoiling = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
         //Invoke(nameof(AcceptDefeat), 10);
     }
 
-    void AcceptDefeat()
+    public void AcceptDefeat()
     {
         Destroy(gameObject);
     }
@@ -48,9 +49,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Recoil(Vector2 directionVector)
+    {
+        _rigidbody.AddForce(directionVector, ForceMode2D.Impulse);
+        _isRecoiling = true;
+        Invoke(nameof(StopRecoiling), .3f);
+    }
+
+    private void StopRecoiling()
+    {
+        _isRecoiling = false;
+    }
+
     private void FixedUpdate()
     {
+        if (_isRecoiling) return;
+
         if (GameManager.Instance.State != GameState.Playing) return;
+
         var dir = _input.actions["Move"].ReadValue<Vector2>();
 
         _rigidbody.velocity = dir * 5;

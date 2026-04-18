@@ -286,7 +286,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &223707417
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -329,7 +329,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.61674404, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -669,6 +669,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &647741434 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7708347932017957748, guid: eb5b40bf1c5f4564a918f5fe531c4e63, type: 3}
+  m_PrefabInstance: {fileID: 9209639690350240960}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &647741436 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2161521585163858444, guid: eb5b40bf1c5f4564a918f5fe531c4e63, type: 3}
+  m_PrefabInstance: {fileID: 9209639690350240960}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647741434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2436ced9a4c92454eaa2e2b3eac6cff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &647741441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647741434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3bd876c8ece574f8f94c99f86d27cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 12
+  hp: 12
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnZero:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 647741436}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: AcceptDefeat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &721965678 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3371961082238091293, guid: 63a8b7dc70ecc1046a9bdf6969f3b498, type: 3}
@@ -1114,10 +1162,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7708347932017957748, guid: eb5b40bf1c5f4564a918f5fe531c4e63, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397627477710881404, guid: eb5b40bf1c5f4564a918f5fe531c4e63, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7708347932017957748, guid: eb5b40bf1c5f4564a918f5fe531c4e63, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 647741441}
   m_SourcePrefab: {fileID: 100100000, guid: eb5b40bf1c5f4564a918f5fe531c4e63, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

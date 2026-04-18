@@ -33,6 +33,16 @@ public class EnemyController : MonoBehaviour
         yield break;
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
+            other.transform.GetComponent<HealthSystem>()?.Damage(3);
+            Vector2 awayDirection = (Vector2)(other.transform.position - transform.position);
+            other.transform.GetComponent<PlayerController>()?.Recoil(awayDirection * 3f);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (!_waypointPath) return;
