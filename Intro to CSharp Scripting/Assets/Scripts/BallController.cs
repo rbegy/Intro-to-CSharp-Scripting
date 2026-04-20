@@ -1,16 +1,25 @@
 using UnityEngine;
 
+[RequireComponent (typeof(Rigidbody2D))]
 public class BallController : MonoBehaviour
 {
     [SerializeField] private float speed = 15f;
-    // fields for dealing with damage
     [SerializeField] private int damage = 5;
+    [SerializeField] private float lifetime = 3;
     [SerializeField] private string tagToDamage;
     //[SerializeField] private LayerMask layersToDamage; //check by layer
 
-    /*
-        OTHER UNCHANGED CODE OMMITTED BUT LEAVE IT THERE!
-    */
+    public void SetDirection(Vector2 dir)
+    {
+        dir = dir.normalized;
+        GetComponent<Rigidbody2D>().velocity = dir * speed;
+        Invoke(nameof(DestroySelf), lifetime);
+    }
+
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -20,10 +29,7 @@ public class BallController : MonoBehaviour
         if (other.transform.CompareTag(tagToDamage))
         {
             other.transform.GetComponent<HealthSystem>()?.Damage(damage);
-            /*
-             * ? is easier to type than
-             * if (other.transform.GetComponent<HealthSystem>() != null) { ...
-             */
         }
+
     }
 }

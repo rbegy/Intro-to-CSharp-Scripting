@@ -10,13 +10,17 @@ GameObject:
   m_Component:
   - component: {fileID: 248056846542241513}
   - component: {fileID: 1797835544420507191}
+  - component: {fileID: 7650029636499340738}
+  - component: {fileID: 5145841049860702105}
   - component: {fileID: 8397627477710881404}
   - component: {fileID: 5546506454069868917}
   - component: {fileID: 2161521585163858444}
   - component: {fileID: 8595923121741197380}
+  - component: {fileID: 1716613274715349258}
+  - component: {fileID: 8624535438095292937}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,6 +92,70 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7650029636499340738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7708347932017957748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3bd876c8ece574f8f94c99f86d27cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 9
+  hp: 9
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnZero:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2161521585163858444}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: AcceptDefeat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5145841049860702105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7708347932017957748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3bd876c8ece574f8f94c99f86d27cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 12
+  hp: 12
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnZero:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2161521585163858444}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: AcceptDefeat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!50 &8397627477710881404
 Rigidbody2D:
   serializedVersion: 4
@@ -114,7 +182,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!60 &5546506454069868917
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -206,3 +274,27 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1716613274715349258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7708347932017957748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d438a40b43e6dd4f996f95a87d9c12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8624535438095292937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7708347932017957748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d438a40b43e6dd4f996f95a87d9c12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

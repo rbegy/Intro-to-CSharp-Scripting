@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   damage: 5
+  lifetime: 3
   tagToDamage: Enemy
 --- !u!212 &1842375147389704887
 SpriteRenderer:
@@ -153,7 +154,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 56b1e5c79ad4c3c4b95863ed5cad2146, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

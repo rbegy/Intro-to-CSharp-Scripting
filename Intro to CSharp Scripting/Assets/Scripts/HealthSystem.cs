@@ -17,7 +17,6 @@ public class HealthSystem : MonoBehaviour
         hp -= hpAmount;
         //Debug.Log("hp amount changed by " + hpAmount + " and is now " + hp);
 
-        //tell any subscriber to this event that damage happened!
         OnDamaged?.Invoke();
 
         //If we hit zero health, raise the OnZero event with all that registered

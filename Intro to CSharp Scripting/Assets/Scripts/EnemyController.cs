@@ -6,26 +6,31 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float patrolDelay = 1;
+    [SerializeField] private float patrolDelay = 1.5f;
     [SerializeField] private float patrolSpeed = 3;
 
     private Rigidbody2D _rb;
     private WaypointPath _waypointPath;
     private Vector2 _patrolTargetPosition;
+    private Animator _animator;
 
     public void AcceptDefeat()
     {
+        GameEventDispatcher.TriggerEnemyDefeated();
         Destroy(gameObject);
     }
-
+    public void TakeHit()
+    {
+        _animator.Play("EnemyHit");
+    }
 
     // Awake is called before Start
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _waypointPath = GetComponentInChildren<WaypointPath>();
+        _animator = GetComponent<Animator>();
     }
-
     // Start is called before the first frame update
     private IEnumerator Start()
     {

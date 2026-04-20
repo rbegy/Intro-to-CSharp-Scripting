@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _facingVector = Vector2.right;
     [SerializeField] private GameObject _ballPrefab;
     private bool _isRecoiling = false;
+    private bool _isFireing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,12 +40,7 @@ public class PlayerController : MonoBehaviour
 
         if (_input.actions["Fire"].WasPressedThisFrame())
         {
-            var ball = Instantiate(_ballPrefab, transform.position, Quaternion.identity);
-
-
-            ball.GetComponent<Rigidbody2D>().velocity = Vector2.left * 10f;
-
-            ball.GetComponent<Rigidbody2D>().velocity = _facingVector.normalized * 10f;
+            _isFireing = true;
             //Debug.Log("Fire activated!");
         }
     }
@@ -74,6 +70,13 @@ public class PlayerController : MonoBehaviour
         if (dir.magnitude > 0.5)
         {
             _facingVector = _rigidbody.velocity;
+        }
+
+        if (_isFireing)
+        {
+            var ball = Instantiate(_ballPrefab, transform.position, Quaternion.identity);
+            ball.GetComponent<BallController>()?.SetDirection(_facingVector);
+            _isFireing = false;
         }
     }
 }

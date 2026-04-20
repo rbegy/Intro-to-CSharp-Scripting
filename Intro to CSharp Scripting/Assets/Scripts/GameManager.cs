@@ -42,9 +42,11 @@ public class GameManager : Singleton<GameManager>
         switch (newState)
         {
             case GameState.Starting:
+                Time.timeScale = 1;
                 StartCoroutine(HandleStarting());
                 break;
             case GameState.Playing:
+                Time.timeScale = 1;
                 break;
             case GameState.Paused:
                 Time.timeScale = 0;
@@ -55,7 +57,6 @@ public class GameManager : Singleton<GameManager>
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
-                break;
         }
 
         OnAfterStateChanged?.Invoke(newState);
