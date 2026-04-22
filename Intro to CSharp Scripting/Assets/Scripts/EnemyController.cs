@@ -1,18 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D))] 
 
 public class EnemyController : MonoBehaviour
 {
+    public enum EnemyType
+    {
+        Normal,
+        Scanner
+    }
+
+    public EnemyType enemyType = EnemyType.Normal;
+
+
     [SerializeField] private float patrolDelay = 1.5f;
+    [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float patrolSpeed = 3;
+    [SerializeField] private float scanRange = 5f;
 
     private Rigidbody2D _rb;
     private WaypointPath _waypointPath;
     private Vector2 _patrolTargetPosition;
     private Animator _animator;
+    public Boolean seen = false;
 
     public void AcceptDefeat()
     {
@@ -34,6 +47,10 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     private IEnumerator Start()
     {
+        if (enemyType == EnemyType.Scanner)
+        {
+            yield break;
+        }
         _patrolTargetPosition = _waypointPath.GetNextWaypointPosition();
         yield break;
     }
@@ -48,42 +65,81 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (!_waypointPath) return;
-
-        //set our direction toward that waypoint:
-        //subtracting our position from target position
-        //gives us the slope line between the two
-        //We can get direction by normalizing it
-        //We can get distance by magnitude
-        var dir = _patrolTargetPosition - (Vector2)transform.position;
-
-        //if we are close enough to the target,
-        //time to get the next waypoint
-        if (dir.magnitude <= 0.1)
+        if (enemyType == EnemyType.Scanner)
         {
-            //get next waypoint
-            _patrolTargetPosition = _waypointPath.GetNextWaypointPosition();
+            if (!seen && GameManager.Instance.State == GameState.Playing)
+            {
+                transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+            }
+            if(GameManager.Instance.State != GameState.Playing || seen)
+            {
+                transform.Rotate(0, 0, 0);
+            } 
 
-            //change direction
-            dir = _patrolTargetPosition - (Vector2)transform.position;
-        }
-
-        //this if/else is not in the video (it was made in the GameManager videos)
-        //Be sure to update the line in the if clause to match the change in the
-        //video instead of adding it above
-        if (GameManager.Instance.State == GameState.Playing)
-        {
-            //UPDATE: how velocity is set
-            //normalized reduces dir magnitude to 1, so we can
-            //keep at the speed we want by multiplying
-            _rb.velocity = dir.normalized * patrolSpeed;
-        }
-        else
-        {
-            _rb.velocity = Vector2.zero;
         }
     }
 
+    private void FixedUpdate()
+    {
+        int layerMask = LayerMask.GetMask("Player");
+        if (enemyType == EnemyType.Scanner)
+        {
+            Ray2D ray = new Ray2D(transform.position, transform.up);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, scanRange, layerMask);
+            if (hit.collider)
+            {
+                seen = true;
+                Attack(ray);
+            }
+
+            if (seen)
+            {
+                layerMask = LayerMask.GetMask("Default");
+                hit = Physics2D.Raycast(transform.position, transform.up, scanRange, layerMask);
+                if (hit.collider)
+                {
+                    _rb.velocity = Vector2.zero;
+                    seen = false;
+                    scanRange = 5f;
+                }
+                
+            }
+        }
+        else
+        {
+            if (!_waypointPath) return;
+            var dir = _patrolTargetPosition - (Vector2)transform.position;
+
+
+            if (dir.magnitude <= 0.1)
+            {
+                //get next waypoint
+                _patrolTargetPosition = _waypointPath.GetNextWaypointPosition();
+
+                //change direction
+                dir = _patrolTargetPosition - (Vector2)transform.position;
+            }
+
+
+            if (GameManager.Instance.State == GameState.Playing)
+            {
+                _rb.velocity = dir.normalized * patrolSpeed;
+            }
+            else
+            {
+                _rb.velocity = Vector2.zero;
+            }
+        }
+
+
+    }
+
+
+    private void Attack(Ray2D ray)
+    {
+        scanRange = 3f;
+        _rb.velocity = ray.direction * patrolSpeed;
+    }
 }

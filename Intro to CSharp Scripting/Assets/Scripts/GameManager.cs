@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 //An enum of all the possible GameStates (Many are Gameplay Modes!)
@@ -21,6 +23,7 @@ public class GameManager : Singleton<GameManager>
     public GameState State { get; private set; }
 
     private GameState _previousState = GameState.Starting;
+    public Text text;
 
 
     void Start()
@@ -35,7 +38,6 @@ public class GameManager : Singleton<GameManager>
         _previousState = State;
         State = newState;
         Debug.Log("Changed Game State to    : " + newState);
-
         
 
         //This Game Manager can do high level manager stuff, itself.
@@ -46,12 +48,15 @@ public class GameManager : Singleton<GameManager>
                 StartCoroutine(HandleStarting());
                 break;
             case GameState.Playing:
+                text.text = "";
                 Time.timeScale = 1;
                 break;
             case GameState.Paused:
+                text.text = "PAUSED";
                 Time.timeScale = 0;
                 break;
             case GameState.FailScreen:
+                StartCoroutine(Death());
                 break;
             case GameState.VictoryDance:
                 break;
@@ -60,6 +65,11 @@ public class GameManager : Singleton<GameManager>
         }
 
         OnAfterStateChanged?.Invoke(newState);
+    }
+
+    public void ToggleDeath()
+    {
+        ChangeState(GameState.FailScreen);
     }
 
     public void TogglePause()
@@ -71,10 +81,23 @@ public class GameManager : Singleton<GameManager>
             ChangeState(GameState.Paused);
     }
 
+    public IEnumerator Death()
+    {
+        text.text = "You Died";
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     private IEnumerator HandleStarting()
     {
-        //Play music here?
-        yield return new WaitForSeconds(2);
+        text.text = "3";
+        yield return new WaitForSeconds(1);
+        text.text = "2";
+        yield return new WaitForSeconds(1);
+        text.text = "1";
+        yield return new WaitForSeconds(1);
+        text.text = "GO";
+        yield return new WaitForSeconds(.5f);
         ChangeState(GameState.Playing);
     }
 }
